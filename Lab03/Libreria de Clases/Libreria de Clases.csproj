@@ -40,12 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABinBusqueda.cs" />
-    <Compile Include="ArbolAVLBase.cs" />
-    <Compile Include="ArbolBinarioBase.cs" />
     <Compile Include="AVL.cs" />
-    <Compile Include="IArbolAVL.cs" />
-    <Compile Include="IArbolBinario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
