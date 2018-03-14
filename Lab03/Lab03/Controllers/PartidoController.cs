@@ -114,35 +114,41 @@ namespace Lab03.Controllers
             //Se lee el Archivo que se subio, por medio del Lector
 
             StreamReader Lector = new StreamReader(Direccion);
-            //El Archivo se lee en una lista para luego ingresarlo
+            //El Archivo se lee en una linea para luego ingresarlo
 
             //Se crea un Jugador Momentaneo para pasar los datos
+            List<Partido> ListadePartidos = new List<Partido>();
 
-            string lineap = Lector.ReadToEnd();
-            string Dato = Lector.ReadLine();
+            string Dato = "";
             Dato = Lector.ReadLine();
-            Dato = Lector.ReadLine();
-            string Linea = "{"+Dato;
 
-            var Objeto = JsonConvert.DeserializeObject(lineap);
             while (Dato != null)
             {
                 Dato = Lector.ReadLine();
+                Dato = Lector.ReadLine();
+
+                string Linea = "{";
+
                 for (int i = 0; i < 6; i++)
                 {
-                    if(i != 5)
-                    {
-                        Linea = Linea + Dato;
-                        Dato = Lector.ReadLine();
-
-                    }
+                    Linea = Linea + Dato;
+                    Dato = Lector.ReadLine();
                 }
-                Partido nodo = JsonConvert.DeserializeObject<Partido>(Linea);
-                DataBase.Instance.ArbolPartido.Insertar(nodo, null);
-                Dato = Lector.ReadLine();
+
+                Linea = Linea + "}";
+
+                Partido objTemporal = JsonConvert.DeserializeObject<Partido>(Linea);
+                ListadePartidos.Add(objTemporal);
+
                 Linea = "";
             }
 
+            foreach (var item in ListadePartidos)
+            {
+                if (item.Estadio != null)
+                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido.NodoPadre);
+            }
+            
             try
             {
                 
