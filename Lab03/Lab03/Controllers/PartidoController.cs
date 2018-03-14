@@ -36,10 +36,10 @@ namespace Lab03.Controllers
         {
             try
             {
-               Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], collection["Pais1"], collection["Pais2"], collection["Estadio"]);
-               AVL<Partido> nNodo = new AVL<Partido>(nuevopartido, null, null, null);
+            //   Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], collection["Pais1"], collection["Pais2"], collection["Estadio"]);
+            //   AVL<Partido> nNodo = new AVL<Partido>(nuevopartido, null, null, null);
 
-                DataBase.Instance.ArbolPartido.Insertar(nuevopartido,nNodo);
+             //   DataBase.Instance.ArbolPartido.Insertar(nuevopartido,nNodo);
 
                 return RedirectToAction("Index");
             }
@@ -118,22 +118,23 @@ namespace Lab03.Controllers
 
             //Se crea un Jugador Momentaneo para pasar los datos
 
+            string lineap = Lector.ReadToEnd();
             string Dato = Lector.ReadLine();
             Dato = Lector.ReadLine();
             Dato = Lector.ReadLine();
             string Linea = "{"+Dato;
 
-
+            var Objeto = JsonConvert.DeserializeObject(lineap);
             while (Dato != null)
             {
                 Dato = Lector.ReadLine();
                 for (int i = 0; i < 6; i++)
                 {
-                    Linea = Linea + Dato;
-                    Dato = Lector.ReadLine();
-                    if(Dato.Contains(","))
+                    if(i != 5)
                     {
-         
+                        Linea = Linea + Dato;
+                        Dato = Lector.ReadLine();
+
                     }
                 }
                 Partido nodo = JsonConvert.DeserializeObject<Partido>(Linea);

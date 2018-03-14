@@ -12,7 +12,7 @@ namespace Lab03.Models
         public int noPartido { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "La Fecha del Partido es Requerida")]
-        public DateTime FechaPartido { get; set; }
+        public string FechaPartido { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Nombre del Grupo es Requerido")]
         public string Grupo { get; set; }
@@ -26,7 +26,7 @@ namespace Lab03.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Nombre del Estadio es Requerido")]
         public string Estadio { get; set; }
 
-        public Partido(int NoPartido, DateTime FechaPartido, string Grupo, string Pais1, string Pais2, string Estadio)
+        public Partido(int NoPartido, string FechaPartido, string Grupo, string Pais1, string Pais2, string Estadio)
         {
             this.noPartido = NoPartido;
             this.FechaPartido = FechaPartido;
