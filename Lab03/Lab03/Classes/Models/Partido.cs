@@ -6,10 +6,10 @@ using System.Web;
 
 namespace Lab03.Models
 {
-    public class Partido
+    public class Partido : IComparable
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Numero de Partido es Requerido")]
-        public int NoPartido { get; set; }
+        public int noPartido { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "La Fecha del Partido es Requerida")]
         public DateTime FechaPartido { get; set; }
@@ -28,7 +28,7 @@ namespace Lab03.Models
 
         public Partido(int NoPartido, DateTime FechaPartido, string Grupo, string Pais1, string Pais2, string Estadio)
         {
-            this.NoPartido = NoPartido;
+            this.noPartido = NoPartido;
             this.FechaPartido = FechaPartido;
             this.Grupo = Grupo;
             this.Pais1 = Pais1;
@@ -38,12 +38,12 @@ namespace Lab03.Models
 
         public Comparison<Partido> CompareByNoPartido = delegate (Partido i, Partido j)
         {
-            return i.NoPartido.CompareTo(j.NoPartido);
+            return i.noPartido.CompareTo(j.noPartido);
         };
 
         public Comparison<Partido> CompareByFechaPartido = delegate (Partido i, Partido j)
         {
-            return i.FechaPartido.CompareTo(j.NoPartido);
+            return i.FechaPartido.CompareTo(j.FechaPartido);
         };
 
         public Comparison<Partido> CompareByPais1 = delegate (Partido i, Partido j)
@@ -68,12 +68,12 @@ namespace Lab03.Models
 
         public override string ToString()
         {
-            return $"{NoPartido}|{FechaPartido}|{Grupo}|{Pais1}|{Pais2}|{Estadio}";
+            return $"{noPartido}|{FechaPartido}|{Grupo}|{Pais1}|{Pais2}|{Estadio}";
         }
 
         public bool Equals(Partido partido)
         {
-            bool igual = partido.NoPartido == NoPartido;
+            bool igual = partido.noPartido == noPartido;
             igual = igual && partido.FechaPartido == FechaPartido;
             igual = igual && partido.Grupo == Grupo;
             igual = igual && partido.Pais1 == Pais1;
@@ -82,5 +82,9 @@ namespace Lab03.Models
             return igual;
         }
 
+        public int CompareTo(object obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
