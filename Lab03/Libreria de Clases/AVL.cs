@@ -34,19 +34,45 @@ namespace Libreria_de_Clases
         }
 
         //Funcion para insertar un nuevo valor en el arbol AVL
-        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz)
+        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz, AVL<T> Anterior)
         {
             if (Raiz == null)
             {
-                NodoPadre = new AVL<T>(valorNuevo, null, null, null);
+                iElementos++;
+
+                if (NodoPadre == null)
+                {
+                    NodoPadre = new AVL<T>(valorNuevo, null, null, null);
+                    valor = valorNuevo;
+                    Raiz = NodoPadre;
+                }
+                else
+                    Raiz = new AVL<T>(valorNuevo, null, null, Anterior);
+
             }
             else if (valorNuevo.CompareTo(Raiz.valor) < 0)
             {
-                NodoPadre.NodoIzquierdo = Insertar(valorNuevo, NodoPadre.NodoIzquierdo);
+                iElementos++;
+
+                if (Raiz.NodoIzquierdo == null)
+                {
+                    Raiz.NodoIzquierdo = new AVL<T>(valorNuevo, null, null, Anterior);
+                    Raiz = Raiz.NodoIzquierdo;
+                }
+                else
+                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo, Raiz);
             }
             else if(valorNuevo.CompareTo(Raiz.valor) > 0)
             {
-                NodoPadre.NodoDerecho = Insertar(valorNuevo, NodoPadre.NodoDerecho);
+                iElementos++;
+
+                if (Raiz.NodoDerecho == null)
+                {
+                    Raiz.NodoDerecho = new AVL<T>(valorNuevo, null, null, Anterior);
+                    Raiz = Raiz.NodoDerecho;
+                }
+                else
+                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho, Raiz);
             }
             else
             {
@@ -54,26 +80,26 @@ namespace Libreria_de_Clases
                // MessageBox.Show("Valor Existente en el Arbol","Error",MessageBoxButtons.OK);
             }
             //Realiza las rotaciones simples o dobles segun el caso
-            if
-            (Alturas(NodoPadre.NodoIzquierdo) - Alturas(NodoPadre.NodoDerecho) == 2)
+
+            /*
+            if(Alturas(Raiz.NodoIzquierdo) - Alturas(Raiz.NodoDerecho) == 2)
             {
-                if
-                (valorNuevo.CompareTo(NodoPadre.NodoIzquierdo.valor) < 0)
-                    NodoPadre = RotacionIzquierdaSimple(NodoPadre);
+                if(valorNuevo.CompareTo(NodoPadre.NodoIzquierdo.valor) < 0)
+                    Raiz = RotacionIzquierdaSimple(Raiz);
                 else
-                    NodoPadre = RotacionIzquierdaDoble(NodoPadre);
+                    Raiz = RotacionIzquierdaDoble(Raiz);
             }
-            if
-            (Alturas(NodoPadre.NodoDerecho) - Alturas(NodoPadre.NodoIzquierdo) == 2)
+            if(Alturas(Raiz.NodoDerecho) - Alturas(Raiz.NodoIzquierdo) == 2)
             {
-                if
-                (valorNuevo.CompareTo(NodoPadre.NodoDerecho.valor) > 0)
-                    NodoPadre = RotacionDerechaSimple(NodoPadre);
+                if(valorNuevo.CompareTo(NodoPadre.NodoDerecho.valor) > 0)
+                    Raiz = RotacionDerechaSimple(Raiz);
                 else
-                    NodoPadre = RotacionDerechaDoble(NodoPadre);
+                    Raiz = RotacionDerechaDoble(Raiz);
             }
-            NodoPadre.altura = max(Alturas(NodoPadre.NodoIzquierdo), Alturas(NodoPadre.NodoDerecho)) + 1;
-            return NodoPadre;
+            Raiz.altura = max(Alturas(Raiz.NodoIzquierdo), Alturas(Raiz.NodoDerecho)) + 1;
+            */
+
+            return Raiz;
         }
 
         //FUNCION DE PRUEBA PARA REALIZAR LAS ROTACIONES
