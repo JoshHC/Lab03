@@ -143,10 +143,12 @@ namespace Lab03.Controllers
                 Linea = "";
             }
 
+            int No = 0; 
+
             foreach (var item in ListadePartidos)
             {
                 if (item.Estadio != null)
-                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido);
+                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido, ref No);
             }
             
             try

@@ -32,14 +32,16 @@ namespace Libreria_de_Clases
         }
 
         //Funcion para insertar un nuevo valor en el arbol AVL
-        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz)
+        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz, ref int No)
         {
+            No++;
+
             if (valor == null && NodoIzquierdo == null && NodoDerecho == null)
             {
                 iElementos++;
                 valor = valorNuevo;
             }
-            else if (valorNuevo.CompareTo(valor) < 0)
+            else if (valorNuevo.CompareTo(Raiz.valor) < 0)
             {
                 if (Raiz.NodoIzquierdo == null)
                 {
@@ -47,9 +49,9 @@ namespace Libreria_de_Clases
                     Raiz.NodoIzquierdo = new AVL<T>(valorNuevo, null, null);
                 }
                 else
-                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo);
+                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo, ref No);
             }
-            else if(valorNuevo.CompareTo(valor) > 0)
+            else if(valorNuevo.CompareTo(Raiz.valor) > 0)
             {
                 if (Raiz.NodoDerecho == null)
                 {
@@ -57,30 +59,44 @@ namespace Libreria_de_Clases
                     Raiz.NodoDerecho = new AVL<T>(valorNuevo, null, null);
                 }
                 else
-                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho);
+                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho, ref No);
             }
             else
             {
                 //CREAR FUNCION DE ERROR
                // MessageBox.Show("Valor Existente en el Arbol","Error",MessageBoxButtons.OK);
             }
-            //Realiza las rotaciones simples o dobles segun el caso
 
-            if(Alturas(Raiz.NodoIzquierdo) - Alturas(Raiz.NodoDerecho) == 2)
+            //Realiza las rotaciones simples o dobles segun el caso
+            int alturaIzquierda = Alturas(Raiz.NodoIzquierdo);
+            int alturaDerecha = Alturas(Raiz.NodoDerecho);
+
+            if (alturaIzquierda - alturaDerecha == 2)
             {
                 if(valorNuevo.CompareTo(Raiz.NodoIzquierdo.valor) < 0)
                     Raiz = RotacionIzquierdaSimple(Raiz);
                 else
                     Raiz = RotacionIzquierdaDoble(Raiz);
             }
-            if(Alturas(Raiz.NodoDerecho) - Alturas(Raiz.NodoIzquierdo) == 2)
+
+            if(alturaDerecha - alturaIzquierda == 2)
             {
-                if(valorNuevo.CompareTo(Raiz.NodoDerecho.valor) > 0)
+                if (valorNuevo.CompareTo(Raiz.NodoDerecho.valor) > 0)
                     Raiz = RotacionDerechaSimple(Raiz);
                 else
                     Raiz = RotacionDerechaDoble(Raiz);
             }
+
             Raiz.altura = max(Alturas(Raiz.NodoIzquierdo), Alturas(Raiz.NodoDerecho)) + 1;
+
+            No--;
+
+            if (No == 0)
+            {
+                this.NodoDerecho = Raiz.NodoDerecho;
+                this.NodoIzquierdo = Raiz.NodoIzquierdo;
+                this.valor = Raiz.valor;
+            }
 
             return Raiz;
         }
@@ -93,6 +109,7 @@ namespace Libreria_de_Clases
             return
             lhs > rhs ? lhs : rhs;
         }
+
         private static int Alturas(AVL<T> Raiz)
         {
             return Raiz == null ? -1 : Raiz.altura;
