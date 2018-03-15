@@ -84,7 +84,18 @@ namespace Lab03.Models
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Partido partido = obj as Partido;
+
+                return CompareByNoPartido(this, partido);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
+        
     }
 }

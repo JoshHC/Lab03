@@ -21,7 +21,6 @@ namespace Libreria_de_Clases
         {
             this.NodoPadre = null;
             this.iElementos = 0;
-
         }
 
         // Constructor.
@@ -38,18 +37,16 @@ namespace Libreria_de_Clases
         public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz)
         {
             if (Raiz == null)
-                Raiz = new AVL<T>(valorNuevo,null,null,null);
-            else
-            if
-            (valorNuevo.CompareTo(Raiz.valor) < 0)
             {
-                Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo);
+                NodoPadre = new AVL<T>(valorNuevo, null, null, null);
             }
-            else
-            if
-            (valorNuevo.CompareTo(Raiz.valor) > 0)
+            else if (valorNuevo.CompareTo(Raiz.valor) < 0)
             {
-                Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho);
+                NodoPadre.NodoIzquierdo = Insertar(valorNuevo, NodoPadre.NodoIzquierdo);
+            }
+            else if(valorNuevo.CompareTo(Raiz.valor) > 0)
+            {
+                NodoPadre.NodoDerecho = Insertar(valorNuevo, NodoPadre.NodoDerecho);
             }
             else
             {
@@ -58,25 +55,25 @@ namespace Libreria_de_Clases
             }
             //Realiza las rotaciones simples o dobles segun el caso
             if
-            (Alturas(Raiz.NodoIzquierdo) - Alturas(Raiz.NodoDerecho) == 2)
+            (Alturas(NodoPadre.NodoIzquierdo) - Alturas(NodoPadre.NodoDerecho) == 2)
             {
                 if
-                (valorNuevo.CompareTo(Raiz.NodoIzquierdo.valor) < 0)
-                    Raiz = RotacionIzquierdaSimple(Raiz);
+                (valorNuevo.CompareTo(NodoPadre.NodoIzquierdo.valor) < 0)
+                    NodoPadre = RotacionIzquierdaSimple(NodoPadre);
                 else
-                    Raiz = RotacionIzquierdaDoble(Raiz);
+                    NodoPadre = RotacionIzquierdaDoble(NodoPadre);
             }
             if
-            (Alturas(Raiz.NodoDerecho) - Alturas(Raiz.NodoIzquierdo) == 2)
+            (Alturas(NodoPadre.NodoDerecho) - Alturas(NodoPadre.NodoIzquierdo) == 2)
             {
                 if
-                (valorNuevo.CompareTo(Raiz.NodoDerecho.valor) > 0)
-                    Raiz = RotacionDerechaSimple(Raiz);
+                (valorNuevo.CompareTo(NodoPadre.NodoDerecho.valor) > 0)
+                    NodoPadre = RotacionDerechaSimple(NodoPadre);
                 else
-                    Raiz = RotacionDerechaDoble(Raiz);
+                    NodoPadre = RotacionDerechaDoble(NodoPadre);
             }
-            Raiz.altura = max(Alturas(Raiz.NodoIzquierdo), Alturas(Raiz.NodoDerecho)) + 1;
-            return Raiz;
+            NodoPadre.altura = max(Alturas(NodoPadre.NodoIzquierdo), Alturas(NodoPadre.NodoDerecho)) + 1;
+            return NodoPadre;
         }
 
         //FUNCION DE PRUEBA PARA REALIZAR LAS ROTACIONES
@@ -89,12 +86,7 @@ namespace Libreria_de_Clases
         }
         private static int Alturas(AVL<T> Raiz)
         {
-            return
-            Raiz ==
-            null
-            ?
-            -
-            1 : Raiz.altura;
+            return Raiz == null ? -1 : Raiz.altura;
         }
 
         AVL<T> nodoE, nodoP;
@@ -130,21 +122,19 @@ namespace Libreria_de_Clases
                             (Alturas(nodoE.NodoIzquierdo) - Alturas(nodoE.NodoDerecho) == 2)
                             {
                                 //MessageBox.Show("nodoE" + nodoE.valor.ToString());
-                                if
-                                (valorEliminar.CompareTo(nodoE.valor) < 0)
-                                nodoP = RotacionIzquierdaSimple(nodoE);
+                                if (valorEliminar.CompareTo(nodoE.valor) < 0)
+                                    nodoP = RotacionIzquierdaSimple(nodoE);
                                 else
                                     nodoE = RotacionDerechaSimple(nodoE);
                             }
                             if
                             (Alturas(nodoE.NodoDerecho) - Alturas(nodoE.NodoIzquierdo) == 2)
                             {
-                                if
-                                (valorEliminar.CompareTo(nodoE.NodoDerecho.valor) > 0)
-                                nodoE = RotacionDerechaSimple(nodoE);
+                                if(valorEliminar.CompareTo(nodoE.NodoDerecho.valor) > 0)
+                                    nodoE = RotacionDerechaSimple(nodoE);
                                 else
-                                nodoE = RotacionDerechaDoble(nodoE);
-                                nodoP = RotacionDerechaSimple(nodoE);
+                                    nodoE = RotacionDerechaDoble(nodoE);
+                                    nodoP = RotacionDerechaSimple(nodoE);
                             }
                         }
                         else
@@ -156,8 +146,7 @@ namespace Libreria_de_Clases
                             }
                             else
                             {
-                                if
-                                (Alturas(Raiz.NodoIzquierdo) - Alturas(Raiz.NodoDerecho) > 0)
+                                if(Alturas(Raiz.NodoIzquierdo) - Alturas(Raiz.NodoDerecho) > 0)
                                 {
                                     AVL<T> AuxiliarNodo = null;
                                     AVL<T> Auxiliar = Raiz.NodoIzquierdo;
