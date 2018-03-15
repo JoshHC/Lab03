@@ -146,7 +146,7 @@ namespace Lab03.Controllers
             foreach (var item in ListadePartidos)
             {
                 if (item.Estadio != null)
-                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido.NodoPadre, null);
+                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido);
             }
             
             try

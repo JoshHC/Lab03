@@ -10,69 +10,54 @@ namespace Libreria_de_Clases
 {
     public class AVL<T> : IEnumerable<T> where T : IComparable
     {
-        public T valor;
         public AVL<T> NodoIzquierdo;
+        public T valor;
         public AVL<T> NodoDerecho;
-        public AVL<T> NodoPadre;
         public int altura;
         int iElementos;
 
         public AVL()
         {
-            this.NodoPadre = null;
+            this.valor = default(T);
             this.iElementos = 0;
         }
 
         // Constructor.
-        public AVL(T valorNuevo, AVL<T> izquierdo, AVL<T> derecho, AVL<T> padre)
+        public AVL(T valorNuevo, AVL<T> izquierdo, AVL<T> derecho)
         {
-            valor = valorNuevo;
             NodoIzquierdo = izquierdo;
+            valor = valorNuevo;
             NodoDerecho = derecho;
-            NodoPadre = padre;
             altura = 0;
         }
 
         //Funcion para insertar un nuevo valor en el arbol AVL
-        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz, AVL<T> Anterior)
+        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz)
         {
-            if (Raiz == null)
+            if (valor == null && NodoIzquierdo == null && NodoDerecho == null)
             {
                 iElementos++;
-
-                if (NodoPadre == null)
-                {
-                    NodoPadre = new AVL<T>(valorNuevo, null, null, null);
-                    valor = valorNuevo;
-                    Raiz = NodoPadre;
-                }
-                else
-                    Raiz = new AVL<T>(valorNuevo, null, null, Anterior);
-
+                valor = valorNuevo;
             }
-            else if (valorNuevo.CompareTo(Raiz.valor) < 0)
+            else if (valorNuevo.CompareTo(valor) < 0)
             {
-                iElementos++;
-
                 if (Raiz.NodoIzquierdo == null)
                 {
-                    Raiz.NodoIzquierdo = new AVL<T>(valorNuevo, null, null, Anterior);
-                    Raiz = Raiz.NodoIzquierdo;
+                    iElementos++;
+                    Raiz.NodoIzquierdo = new AVL<T>(valorNuevo, null, null);
                 }
                 else
-                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo, Raiz);
+                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo);
             }
-            else if(valorNuevo.CompareTo(Raiz.valor) > 0)
+            else if(valorNuevo.CompareTo(valor) > 0)
             {
-                iElementos++;
-
                 if (Raiz.NodoDerecho == null)
                 {
-                    Raiz.NodoDerecho = new AVL<T>(valorNuevo, null, null, Anterior);
-                    Raiz = Raiz.NodoDerecho;
+                    iElementos++;
+                    Raiz.NodoDerecho = new AVL<T>(valorNuevo, null, null);
                 }
                 else
-                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho, Raiz);
+                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho);
             }
             else
             {
@@ -81,23 +66,21 @@ namespace Libreria_de_Clases
             }
             //Realiza las rotaciones simples o dobles segun el caso
 
-            /*
             if(Alturas(Raiz.NodoIzquierdo) - Alturas(Raiz.NodoDerecho) == 2)
             {
-                if(valorNuevo.CompareTo(NodoPadre.NodoIzquierdo.valor) < 0)
+                if(valorNuevo.CompareTo(Raiz.NodoIzquierdo.valor) < 0)
                     Raiz = RotacionIzquierdaSimple(Raiz);
                 else
                     Raiz = RotacionIzquierdaDoble(Raiz);
             }
             if(Alturas(Raiz.NodoDerecho) - Alturas(Raiz.NodoIzquierdo) == 2)
             {
-                if(valorNuevo.CompareTo(NodoPadre.NodoDerecho.valor) > 0)
+                if(valorNuevo.CompareTo(Raiz.NodoDerecho.valor) > 0)
                     Raiz = RotacionDerechaSimple(Raiz);
                 else
                     Raiz = RotacionDerechaDoble(Raiz);
             }
             Raiz.altura = max(Alturas(Raiz.NodoIzquierdo), Alturas(Raiz.NodoDerecho)) + 1;
-            */
 
             return Raiz;
         }
@@ -333,7 +316,7 @@ namespace Libreria_de_Clases
 
         public IEnumerator<T> GetEnumerator()
         {
-            AVL<T> current = NodoPadre;
+            AVL<T> current = this;
             int i = 0;
             while (current != null && i < iElementos)
             {
