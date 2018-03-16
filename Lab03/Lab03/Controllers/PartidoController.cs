@@ -17,7 +17,7 @@ namespace Lab03.Controllers
         public ActionResult Index()
         {
 
-            return View(DataBase.Instance.ArbolPartido.LeerArbol());
+            return View(DataBase.Instance.ArbolPartido.Orders("InOrder"));
         }
 
         // GET: Partido/Details/5
@@ -39,7 +39,7 @@ namespace Lab03.Controllers
             {
              Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], collection["Pais1"], collection["Pais2"], collection["Estadio"]);
 
-             DataBase.Instance.ArbolPartido.Insertar(nuevopartido,DataBase.Instance.ArbolPartido);
+             DataBase.Instance.ArbolPartido.Insertar(nuevopartido);
 
             return RedirectToAction("Index");
             }
@@ -49,13 +49,13 @@ namespace Lab03.Controllers
             }
         }
 
-        // GET: Partido/Edit/5
+        // GET: Partido/Editar/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Partido/Edit/5
+        // POST: Partido/Editar/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -148,11 +148,11 @@ namespace Lab03.Controllers
 
                 foreach (var item in ListadePartidos)
             {
-                if (item.Estadio != null)
-                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido);
+                    if (item.Estadio != null)
+                        DataBase.Instance.ArbolPartido.Insertar(item);
             }     
 
-                return RedirectToAction("Index",DataBase.Instance.ArbolPartido);
+                return RedirectToAction("Index");
             }
             catch
             {

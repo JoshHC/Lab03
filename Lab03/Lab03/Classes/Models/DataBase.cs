@@ -20,11 +20,11 @@ namespace Lab03.Classes.Models
             }
         }
 
-        public AVL<Partido> ArbolPartido;
+        public ArbolAVL<Partido> ArbolPartido;
 
         public DataBase()
         {
-            ArbolPartido = new AVL<Partido>();
+            ArbolPartido = new ArbolAVL<Partido>();
         }
     }
 }
