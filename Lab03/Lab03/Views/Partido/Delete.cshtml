@@ -1,0 +1,20 @@
+﻿@model Lab03.Models.Partido
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Estas Seguro que Deseas Eliminar Este Partido?</h3>
+<div>
+    <hr />
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Ver Lista de Partidos", "Index")
+        </div>
+    }
+</div>

@@ -6,7 +6,7 @@ C:\Users\Admin\Desktop\ED Projects\Lab03\Lab03\Libreria de Clases\obj\Debug\Libr
 C:\Users\Admin\Desktop\ED Projects\Lab03\Lab03\Libreria de Clases\obj\Debug\Libreria de Clases.pdb
 C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\bin\Debug\Libreria de Clases.dll
 C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\bin\Debug\Libreria de Clases.pdb
-C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\obj\Debug\Libreria de Clases.csprojResolveAssemblyReference.cache
 C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\obj\Debug\Libreria de Clases.csproj.CoreCompileInputs.cache
 C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\obj\Debug\Libreria de Clases.dll
 C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\obj\Debug\Libreria de Clases.pdb
+C:\Users\josue\Desktop\GitHub\Lab03\Lab03\Libreria de Clases\obj\Debug\Libreria de Clases.csprojResolveAssemblyReference.cache

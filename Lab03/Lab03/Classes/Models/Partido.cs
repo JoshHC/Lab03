@@ -36,50 +36,23 @@ namespace Lab03.Models
             this.Estadio = Estadio;
         }
 
-        public Comparison<Partido> CompareByNoPartido = delegate (Partido i, Partido j)
-        {
-            return i.noPartido.CompareTo(j.noPartido);
-        };
 
-        public Comparison<Partido> CompareByFechaPartido = delegate (Partido i, Partido j)
+        public Partido()
         {
-            return i.FechaPartido.CompareTo(j.FechaPartido);
-        };
-
-        public Comparison<Partido> CompareByPais1 = delegate (Partido i, Partido j)
-        {
-            return i.Pais1.CompareTo(j.Pais1);
-        };
-
-        public Comparison<Partido> CompareByPais2 = delegate (Partido i, Partido j)
-        {
-            return i.Pais2.CompareTo(j.Pais2);
-        };
-
-        public Comparison<Partido> CompareByEstadio = delegate (Partido i, Partido j)
-        {
-            return i.Estadio.CompareTo(j.Estadio);
-        };
-
-        public Comparison<Partido> CompareByGroup = delegate (Partido i, Partido j)
-        {
-            return i.Grupo.CompareTo(j.Grupo);
-        };
-
-        public override string ToString()
-        {
-            return $"{noPartido}|{FechaPartido}|{Grupo}|{Pais1}|{Pais2}|{Estadio}";
+            this.Grupo = null;
+            this.Pais1 = null;
+            this.Pais2 = null;
+            this.Estadio = null;
         }
 
-        public bool Equals(Partido partido)
+        public int CompareByNoPartido(Partido partido)
         {
-            bool igual = partido.noPartido == noPartido;
-            igual = igual && partido.FechaPartido == FechaPartido;
-            igual = igual && partido.Grupo == Grupo;
-            igual = igual && partido.Pais1 == Pais1;
-            igual = igual && partido.Pais2 == Pais2;
-            igual = igual && partido.Estadio == Estadio;
-            return igual;
+            return noPartido.CompareTo(partido.noPartido);
+        }
+
+        public int CompareByFecha(Partido Partido)
+        {
+            return FechaPartido.CompareTo(Partido.FechaPartido);
         }
 
         public int CompareTo(object obj)
@@ -87,15 +60,25 @@ namespace Lab03.Models
             try
             {
                 Partido partido = obj as Partido;
-
-                return CompareByNoPartido(this, partido);
-
+                return CompareByNoPartido(partido);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw e;
+                throw ex;
             }
         }
-        
+
+        public delegate int Comparar(Partido Partido);
+
+        public int CompareTo(Partido partido, Comparar criterio)
+        {
+            return criterio(partido);
+        }
+
+
+
     }
+
+
+
 }

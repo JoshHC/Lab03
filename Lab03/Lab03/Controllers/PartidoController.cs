@@ -50,14 +50,14 @@ namespace Lab03.Controllers
         }
 
         // GET: Partido/Editar/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             return View();
         }
 
         // POST: Partido/Editar/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int? id, FormCollection collection)
         {
             try
             {
@@ -72,18 +72,20 @@ namespace Lab03.Controllers
         }
 
         // GET: Partido/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
             return View();
         }
 
         // POST: Partido/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int? id, int NoPartido, DateTime FechaPartido, string Grupo , string Pais1, string Pais2, string Estadio)
         {
             try
             {
-                // TODO: Add delete logic here
+                Partido nuevopartido = new Partido(NoPartido,FechaPartido,Grupo,Pais1,Pais2,Estadio);
+
+                DataBase.Instance.ArbolPartido.Eliminar(nuevopartido, ref DataBase.Instance.ArbolPartido.Raiz);
 
                 return RedirectToAction("Index");
             }
@@ -156,7 +158,7 @@ namespace Lab03.Controllers
             }
             catch
             {
-                TempData["msg"] = "<script> alert('Error Los Datos del Archivo Json no se pudieron Insertar');</script>";
+                TempData["msg"] = "<script> alert('Error Los Datos del Archivo Json no se pudieron InsertarHijos');</script>";
                 return RedirectToAction("Index");
             }  
 
