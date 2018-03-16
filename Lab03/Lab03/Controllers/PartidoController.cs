@@ -16,7 +16,8 @@ namespace Lab03.Controllers
         // GET: Partido
         public ActionResult Index()
         {
-            return View();
+
+            return View(DataBase.Instance.ArbolPartido.LeerArbol());
         }
 
         // GET: Partido/Details/5
@@ -36,12 +37,11 @@ namespace Lab03.Controllers
         {
             try
             {
-            //   Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], collection["Pais1"], collection["Pais2"], collection["Estadio"]);
-            //   AVL<Partido> nNodo = new AVL<Partido>(nuevopartido, null, null, null);
+             Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], collection["Pais1"], collection["Pais2"], collection["Estadio"]);
 
-             //   DataBase.Instance.ArbolPartido.Insertar(nuevopartido,nNodo);
+             DataBase.Instance.ArbolPartido.Insertar(nuevopartido,DataBase.Instance.ArbolPartido);
 
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
             }
             catch
             {
@@ -143,21 +143,16 @@ namespace Lab03.Controllers
                 Linea = "";
             }
 
-            int No = 0; 
-
-            foreach (var item in ListadePartidos)
-            {
-                if (item.Estadio != null)
-                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido, ref No);
-            }
-            
             try
             {
-                
-               // AVL<Partido> Nodo = JsonConvert.DeserializeObject<AVL<Partido>>(Linea);
-             
 
-                return RedirectToAction("Index");
+                foreach (var item in ListadePartidos)
+            {
+                if (item.Estadio != null)
+                    DataBase.Instance.ArbolPartido.Insertar(item, DataBase.Instance.ArbolPartido);
+            }     
+
+                return RedirectToAction("Index",DataBase.Instance.ArbolPartido);
             }
             catch
             {

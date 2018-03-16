@@ -14,6 +14,7 @@ namespace Libreria_de_Clases
         public T valor;
         public AVL<T> NodoDerecho;
         public int altura;
+        public AVL<T> RaizN;
         int iElementos;
 
         public AVL()
@@ -28,14 +29,16 @@ namespace Libreria_de_Clases
             NodoIzquierdo = izquierdo;
             valor = valorNuevo;
             NodoDerecho = derecho;
+
             altura = 0;
         }
 
-        //Funcion para insertar un nuevo valor en el arbol AVL
-        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz, ref int No)
-        {
-            No++;
+        int contador = 0;
 
+        //Funcion para insertar un nuevo valor en el arbol AVL
+        public AVL<T> Insertar(T valorNuevo, AVL<T> Raiz)
+        {
+            
             if (valor == null && NodoIzquierdo == null && NodoDerecho == null)
             {
                 iElementos++;
@@ -46,20 +49,24 @@ namespace Libreria_de_Clases
                 if (Raiz.NodoIzquierdo == null)
                 {
                     iElementos++;
+                    contador++;
                     Raiz.NodoIzquierdo = new AVL<T>(valorNuevo, null, null);
                 }
                 else
-                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo, ref No);
+                    contador++;
+                    Raiz.NodoIzquierdo = Insertar(valorNuevo, Raiz.NodoIzquierdo);
             }
             else if(valorNuevo.CompareTo(Raiz.valor) > 0)
             {
                 if (Raiz.NodoDerecho == null)
                 {
                     iElementos++;
+                    contador++;
                     Raiz.NodoDerecho = new AVL<T>(valorNuevo, null, null);
                 }
                 else
-                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho, ref No);
+                    contador++;
+                    Raiz.NodoDerecho = Insertar(valorNuevo, Raiz.NodoDerecho);
             }
             else
             {
@@ -73,31 +80,64 @@ namespace Libreria_de_Clases
 
             if (alturaIzquierda - alturaDerecha == 2)
             {
-                if(valorNuevo.CompareTo(Raiz.NodoIzquierdo.valor) < 0)
+                if (valorNuevo.CompareTo(Raiz.NodoIzquierdo.valor) < 0)
+                {
                     Raiz = RotacionIzquierdaSimple(Raiz);
+                }
                 else
+                {
                     Raiz = RotacionIzquierdaDoble(Raiz);
+                }
             }
 
             if(alturaDerecha - alturaIzquierda == 2)
             {
                 if (valorNuevo.CompareTo(Raiz.NodoDerecho.valor) > 0)
+                {
                     Raiz = RotacionDerechaSimple(Raiz);
+                }  
                 else
+                {
                     Raiz = RotacionDerechaDoble(Raiz);
+                }
             }
 
             Raiz.altura = max(Alturas(Raiz.NodoIzquierdo), Alturas(Raiz.NodoDerecho)) + 1;
 
-            No--;
-
-            if (No == 0)
+            if(contador == 0)
             {
-                this.NodoDerecho = Raiz.NodoDerecho;
-                this.NodoIzquierdo = Raiz.NodoIzquierdo;
-                this.valor = Raiz.valor;
+
+                AVL<T> Auxiliar = new AVL<T>();
+                Auxiliar.NodoDerecho = Raiz.NodoDerecho;
+                Auxiliar.NodoIzquierdo = Raiz.NodoIzquierdo;
+                AVL<T> AuxiliarRaiz = new AVL<T>();
+                AuxiliarRaiz = Raiz;
+            
+               
+
+                if (Raiz.NodoDerecho != null)
+                {
+                    if(this.NodoDerecho == null)
+                    {
+                        this.NodoDerecho = Raiz.NodoDerecho;
+                    }
+                }
+                if (Raiz.NodoIzquierdo != null)
+                {
+                    if (this.NodoIzquierdo == null)
+                    {
+                        this.NodoIzquierdo = Auxiliar.NodoIzquierdo;
+                    }
+                }
+
+                Raiz = this.NodoIzquierdo;
             }
 
+            if(contador != 0)
+            {
+                contador--;
+            }
+           
             return Raiz;
         }
 
@@ -347,6 +387,23 @@ namespace Libreria_de_Clases
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public List<T> LeerArbol()
+        {
+            List<T> resultado = new List<T>();
+            InOrden(RaizN, ref resultado); 
+            return resultado;
+        }
+
+        private void InOrden(AVL<T> raiz, ref List<T> resultado)
+        {
+            if (raiz != null)
+            {
+                InOrden(raiz.NodoIzquierdo, ref resultado);
+                resultado.Add(raiz.valor);
+                InOrden(raiz.NodoDerecho, ref resultado);
+            }
         }
     }
 }

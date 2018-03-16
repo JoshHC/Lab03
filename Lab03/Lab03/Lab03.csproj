@@ -189,8 +189,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Partido\UploadFile.cshtml" />
-    <Content Include="Views\Partido\Index.cshtml" />
     <Content Include="Views\Partido\Create.cshtml" />
+    <Content Include="Views\Partido\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
