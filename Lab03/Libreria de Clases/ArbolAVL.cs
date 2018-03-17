@@ -37,9 +37,7 @@ namespace Libreria_de_Clases
         public int Balancear(NodoAVL <T> x)
         {
             if (x == null)
-            {
                 return -1;
-            }
             else
                return x.FactorBalanceo;
         }
@@ -158,14 +156,11 @@ namespace Libreria_de_Clases
         public void Insertar(T value)
         {
             NodoAVL<T> Nuevo = new NodoAVL<T>(value);
+
             if (Raiz == null)
-            {
                 Raiz = Nuevo;
-            }
             else
-            {
                 Raiz = InsertarHijos(Nuevo, Raiz);
-            }
 
         }
 

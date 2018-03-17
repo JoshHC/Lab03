@@ -1,29 +1,36 @@
 ﻿@model Lab03.Models.Partido
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Agregar Partido";
 }
 
-<h2>Create</h2>
+<body background="~/Content/EstadioRusia.jpg"></body>
+
+<h1>Agregar Partido</h1>
+<br />
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Partido</h4>
+        <h4 Align="right">@Html.ActionLink("Back to List", "Index")</h4>
+        <h4>Datos del encuentro</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.NoPartido, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NoPartido, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NoPartido, "", new { @class = "text-danger" })
+            @Html.Label("Número de Partido", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.noPartido, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+                @Html.EditorFor(model => model.noPartido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.noPartido, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FechaPartido, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Fecha del Partido", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*Html.LabelFor(model => model.FechaPartido, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FechaPartido, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FechaPartido, "", new { @class = "text-danger" })
@@ -69,7 +76,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

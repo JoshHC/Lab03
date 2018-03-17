@@ -1,58 +1,62 @@
 ﻿@model IEnumerable<Lab03.Models.Partido>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Partidos";
 }
 
-<h2>Index</h2>
+<body background="~/Content/FondoGris.jpg"></body>
+
+<h2>Listado de Partidos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.noPartido)
+        <th >
+            <h4 align="center">@Html.DisplayName("Número de Partido")</h4>
+            @*@Html.DisplayNameFor(model => model.noPartido)*@
+        </th>
+        <th >
+            <h4 align="center">@Html.DisplayName("Fecha del Partido")</h4>
+            @*@Html.DisplayNameFor(model => model.FechaPartido)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FechaPartido)
+            <h4 align="center">@Html.DisplayNameFor(model => model.Grupo)</h4>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Grupo)
+            <h4 align="center">@Html.DisplayNameFor(model => model.Pais1)</h4>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pais1)
+            <h4 align="center">@Html.DisplayNameFor(model => model.Pais2)</h4>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pais2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estadio)
+            <h4 align="center">@Html.DisplayNameFor(model => model.Estadio)</h4>
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.noPartido)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.FechaPartido)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.Grupo)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.Pais1)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.Pais2)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.Estadio)
         </td>
-        <td>
+        <td align="center">
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Delete", "Delete", new {NoPartido = item.noPartido, FechaPartido = item.FechaPartido, Grupo = item.Grupo, Pais1 = item.Pais1, Pais2 = item.Pais2, Estadio = item.Estadio})

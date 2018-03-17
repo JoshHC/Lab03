@@ -21,10 +21,12 @@ namespace Lab03.Classes.Models
         }
 
         public ArbolAVL<Partido> ArbolPartido;
+        public List<string> ArchivoTexto;
 
         public DataBase()
         {
             ArbolPartido = new ArbolAVL<Partido>();
+            ArchivoTexto = new List<string>();
         }
     }
 }

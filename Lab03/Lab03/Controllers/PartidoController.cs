@@ -13,10 +13,20 @@ namespace Lab03.Controllers
 {
     public class PartidoController : Controller
     {
+        public static void imprimirArchivo()
+        {
+            StreamWriter escritor = new StreamWriter(@"C:\Users\Admin\Desktop\Bitácora.txt");
+
+            foreach (var linea in DataBase.Instance.ArchivoTexto)
+            {
+                escritor.WriteLine(linea);
+            }
+            escritor.Close();
+        }
+
         // GET: Partido
         public ActionResult Index()
         {
-
             return View(DataBase.Instance.ArbolPartido.Orders("InOrder"));
         }
 
@@ -37,11 +47,23 @@ namespace Lab03.Controllers
         {
             try
             {
-             Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], collection["Pais1"], collection["Pais2"], collection["Estadio"]);
+                Partido nuevopartido = new Partido(Convert.ToInt32(collection["NoPartido"]), Convert.ToDateTime(collection["FechaPartido"]), collection["Grupo"], 
+                    collection["Pais1"], collection["Pais2"], collection["Estadio"]);
 
-             DataBase.Instance.ArbolPartido.Insertar(nuevopartido);
+                DataBase.Instance.ArchivoTexto.Add("INSERCION");
+                DataBase.Instance.ArchivoTexto.Add("\tPartido Numero: " + Convert.ToInt32(collection["NoPartido"]));
+                DataBase.Instance.ArchivoTexto.Add("\tFecha del Partido: " + Convert.ToDateTime(collection["FechaPartido"]));
+                DataBase.Instance.ArchivoTexto.Add("\tGrupo: " + collection["Grupo"]);
+                DataBase.Instance.ArchivoTexto.Add("\tPais 1: " + collection["Pais1"]);
+                DataBase.Instance.ArchivoTexto.Add("\tPais 2: " + collection["Pais2"]);
+                DataBase.Instance.ArchivoTexto.Add("\tEstadio: " + collection["Estadio"]);
+                DataBase.Instance.ArchivoTexto.Add("");
 
-            return RedirectToAction("Index");
+                imprimirArchivo();
+
+                DataBase.Instance.ArbolPartido.Insertar(nuevopartido);
+
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -86,6 +108,17 @@ namespace Lab03.Controllers
                 Partido nuevopartido = new Partido(NoPartido,FechaPartido,Grupo,Pais1,Pais2,Estadio);
 
                 DataBase.Instance.ArbolPartido.Eliminar(nuevopartido, ref DataBase.Instance.ArbolPartido.Raiz);
+
+                DataBase.Instance.ArchivoTexto.Add("ELIMINACION");
+                DataBase.Instance.ArchivoTexto.Add("\tPartido Numero: " + NoPartido);
+                DataBase.Instance.ArchivoTexto.Add("\tFecha del Partido: " + FechaPartido);
+                DataBase.Instance.ArchivoTexto.Add("\tGrupo: " + Grupo);
+                DataBase.Instance.ArchivoTexto.Add("\tPais 1: " + Pais1);
+                DataBase.Instance.ArchivoTexto.Add("\tPais 2: " + Pais2);
+                DataBase.Instance.ArchivoTexto.Add("\tEstadio: " + Estadio);
+                DataBase.Instance.ArchivoTexto.Add("");
+
+                imprimirArchivo();
 
                 return RedirectToAction("Index");
             }
@@ -151,7 +184,20 @@ namespace Lab03.Controllers
                 foreach (var item in ListadePartidos)
             {
                     if (item.Estadio != null)
+                    {
+                        DataBase.Instance.ArchivoTexto.Add("INSERCION");
+                        DataBase.Instance.ArchivoTexto.Add("\tPartido Numero: " + item.noPartido);
+                        DataBase.Instance.ArchivoTexto.Add("\tFecha del Partido: " + item.FechaPartido);
+                        DataBase.Instance.ArchivoTexto.Add("\tGrupo: " + item.Grupo);
+                        DataBase.Instance.ArchivoTexto.Add("\tPais 1: " + item.Pais1);
+                        DataBase.Instance.ArchivoTexto.Add("\tPais 2: " + item.Pais2);
+                        DataBase.Instance.ArchivoTexto.Add("\tEstadio: " + item.Estadio);
+                        DataBase.Instance.ArchivoTexto.Add("");
+
+                        imprimirArchivo();
+
                         DataBase.Instance.ArbolPartido.Insertar(item);
+                    }
             }     
 
                 return RedirectToAction("Index");
