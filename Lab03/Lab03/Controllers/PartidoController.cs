@@ -19,14 +19,13 @@ namespace Lab03.Controllers
 
         public static void imprimirArchivo()
         {
-           /* StreamWriter escritor = new StreamWriter(@"C:\Users\josue\Desktop");
-            //Cambiar luego C:\Users\Admin\Desktop\Bitácora.txt 
+            StreamWriter escritor = new StreamWriter(@"C:\Users\Admin\Desktop\Bitácora.txt");
 
             foreach (var linea in DataBase.Instance.ArchivoTexto)
             {
                 escritor.WriteLine(linea);
             }
-            escritor.Close();*/
+            escritor.Close();
         }
 
         // GET: Partido
@@ -240,7 +239,7 @@ namespace Lab03.Controllers
             }
             catch
             {
-                TempData["msg"] = "<script> alert('Error Los Datos del Archivo Json no se pudieron InsertarHijos');</script>";
+                TempData["msg"] = "<script> alert('Error Los Datos del Archivo Json no se pudieron Insertar');</script>";
                 return RedirectToAction("Index");
             }  
 
@@ -248,7 +247,7 @@ namespace Lab03.Controllers
 
         public ActionResult Busqueda(string Tipo, string Search)
         {
-            if (Tipo == "No Partido")
+            if (Tipo == "No Partido" && Search != null)
             {
 
                 List<Partido> ListaDeBuscados = new List<Partido>();
@@ -256,38 +255,76 @@ namespace Lab03.Controllers
                 NoPartidoBuscado.Clear();
                 ListaDeBuscados.Clear();
                 ListaDeBuscados = DataBase.Instance.ArbolPartido.ObtenerArbol();
-                foreach (var item in ListaDeBuscados)
-                {
-                    if (item.noPartido == Convert.ToInt32(Search))
-                    {
-                        NoPartidoBuscado.Add(item);
-                    }
 
+                try
+                {
+                    foreach (var item in ListaDeBuscados)
+                    {
+                        if (item.noPartido == Convert.ToInt32(Search))
+                        {
+                            NoPartidoBuscado.Add(item);
+                        }
+
+                    }
+                    if(NoPartidoBuscado.Count == 0)
+                    {
+                        TempData["msg1"] = "<script> alert('El Dato que Busca no esta en el Arból');</script>";
+                    }
+                    else
+                    {
+                        return View("Index", NoPartidoBuscado);
+                    }
+         
                 }
-                return View("Index", NoPartidoBuscado);
+                catch
+                {
+                    TempData["msg1"] = "<script> alert('ERROR el tipo de Dato Buscado no coincide');</script>";
+                }
 
 
             }
-            else if (Tipo == "Fecha de Partido")
+            else if (Tipo == "Fecha de Partido" && Search != null)
             {
                 List<Partido> ListaDeBuscados = new List<Partido>();
                 List<Partido> FechasBuscadas = new List<Partido>();
                 FechasBuscadas.Clear();
                 ListaDeBuscados.Clear();
                 ListaDeBuscados = DataBase.Instance.ArbolPartido.ObtenerArbol();
-                foreach (var item in ListaDeBuscados)
+
+                try
                 {
-                    if (item.FechaPartido == Convert.ToDateTime(Search))
+                    foreach (var item in ListaDeBuscados)
                     {
-                        FechasBuscadas.Add(item);
+                        if (item.FechaPartido == Convert.ToDateTime(Search))
+                        {
+                            FechasBuscadas.Add(item);
+                        }
+
                     }
 
+
+                    if (FechasBuscadas.Count == 0)
+                    {
+                        TempData["msg1"] = "<script> alert('El Dato que Busca no esta en el Arból');</script>";
+                    }
+                    else
+                    {
+                        return View("Index", FechasBuscadas);
+                    }
+                     
                 }
-                return View("Index", FechasBuscadas);
+                catch
+                {
+                    TempData["msg1"] = "<script> alert('ERROR el tipo de Dato Buscado no coincide');</script>";
+                }
+
 
             }
-
-            return View();
+            if (Search != null)
+            {
+                TempData["msg1"] = "<script> alert('El Dato que Busca no esta en el Arból');</script>";
+            }
+            return View("Busqueda");
         }
     }
 }

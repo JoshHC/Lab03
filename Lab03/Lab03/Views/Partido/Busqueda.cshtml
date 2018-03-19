@@ -22,10 +22,12 @@
 
 }
 
+@Html.Raw(TempData["msg1"])
+
 
 
 <div>
-    @Html.ActionLink("Ver Jugadores", "Index")
+    @Html.ActionLink("Listado de Partidos", "Index")
 </div>
 
 @section Scripts {
