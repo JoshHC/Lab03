@@ -137,8 +137,10 @@ namespace Libreria_de_Clases
             }
             else
             {
-                throw new System.InvalidOperationException("Nodo Duplicado");
+                //Nodo con un factor de ordenamiento ya existente
             }
+
+
             //Actualizando Factor Equilibrio
             if (SubArbol.HijoIzquierdo == null && SubArbol.HijoDerecho != null)
             {
