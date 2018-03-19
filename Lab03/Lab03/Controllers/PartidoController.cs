@@ -13,6 +13,10 @@ namespace Lab03.Controllers
 {
     public class PartidoController : Controller
     {
+
+        //Se crea un Jugador Momentaneo para pasar los datos (Carga del archivo)
+        List<Partido> ListadePartidos = new List<Partido>();
+
         public static void imprimirArchivo()
         {
             StreamWriter escritor = new StreamWriter(@"C:\Users\Admin\Desktop\Bitácora.txt");
@@ -27,7 +31,14 @@ namespace Lab03.Controllers
         // GET: Partido
         public ActionResult Index()
         {
-            return View(DataBase.Instance.ArbolPartido.Orders("InOrder"));
+            try
+            {
+                return View(DataBase.Instance.ArbolPartido.Orders("InOrder"));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Partido/Details/5
@@ -136,7 +147,7 @@ namespace Lab03.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //Aca se hace el Ingreso por medio de Archivo de Texto, ya que el Boton de Result esta Linkeado.
-        public ActionResult UploadFile(HttpPostedFileBase file)
+        public ActionResult UploadFile(HttpPostedFileBase file, int? Tipo)
         {
             if (Path.GetExtension(file.FileName) != ".json")
             {
@@ -150,9 +161,6 @@ namespace Lab03.Controllers
 
             StreamReader Lector = new StreamReader(Direccion);
             //El Archivo se lee en una linea para luego ingresarlo
-
-            //Se crea un Jugador Momentaneo para pasar los datos
-            List<Partido> ListadePartidos = new List<Partido>();
 
             string Dato = "";
             Dato = Lector.ReadLine();
@@ -180,25 +188,52 @@ namespace Lab03.Controllers
 
             try
             {
-
-                foreach (var item in ListadePartidos)
-            {
-                    if (item.Estadio != null)
+                if (Tipo == 1)
+                {
+                    foreach (var item in ListadePartidos)
                     {
-                        DataBase.Instance.ArchivoTexto.Add("INSERCION");
-                        DataBase.Instance.ArchivoTexto.Add("\tPartido Numero: " + item.noPartido);
-                        DataBase.Instance.ArchivoTexto.Add("\tFecha del Partido: " + item.FechaPartido);
-                        DataBase.Instance.ArchivoTexto.Add("\tGrupo: " + item.Grupo);
-                        DataBase.Instance.ArchivoTexto.Add("\tPais 1: " + item.Pais1);
-                        DataBase.Instance.ArchivoTexto.Add("\tPais 2: " + item.Pais2);
-                        DataBase.Instance.ArchivoTexto.Add("\tEstadio: " + item.Estadio);
-                        DataBase.Instance.ArchivoTexto.Add("");
+                        if (item.Estadio != null)
+                        {
+                            item.codigoPK = 1;
 
-                        imprimirArchivo();
+                            DataBase.Instance.ArchivoTexto.Add("INSERCION POR NUMERO DE PARTIDO");
+                            DataBase.Instance.ArchivoTexto.Add("\tPartido Numero: " + item.noPartido);
+                            DataBase.Instance.ArchivoTexto.Add("\tFecha del Partido: " + item.FechaPartido);
+                            DataBase.Instance.ArchivoTexto.Add("\tGrupo: " + item.Grupo);
+                            DataBase.Instance.ArchivoTexto.Add("\tPais 1: " + item.Pais1);
+                            DataBase.Instance.ArchivoTexto.Add("\tPais 2: " + item.Pais2);
+                            DataBase.Instance.ArchivoTexto.Add("\tEstadio: " + item.Estadio);
+                            DataBase.Instance.ArchivoTexto.Add("");
 
-                        DataBase.Instance.ArbolPartido.Insertar(item);
+                            imprimirArchivo();
+
+                            DataBase.Instance.ArbolPartido.Insertar(item);
+                        }
                     }
-            }     
+                }
+                else if (Tipo == 2)
+                {
+                    foreach (var item in ListadePartidos)
+                    {
+                        if (item.Estadio != null)
+                        {
+                            item.codigoPK = 2;
+
+                            DataBase.Instance.ArchivoTexto.Add("INSERCION POR FECHA DEL PARTIDO");
+                            DataBase.Instance.ArchivoTexto.Add("\tPartido Numero: " + item.noPartido);
+                            DataBase.Instance.ArchivoTexto.Add("\tFecha del Partido: " + item.FechaPartido);
+                            DataBase.Instance.ArchivoTexto.Add("\tGrupo: " + item.Grupo);
+                            DataBase.Instance.ArchivoTexto.Add("\tPais 1: " + item.Pais1);
+                            DataBase.Instance.ArchivoTexto.Add("\tPais 2: " + item.Pais2);
+                            DataBase.Instance.ArchivoTexto.Add("\tEstadio: " + item.Estadio);
+                            DataBase.Instance.ArchivoTexto.Add("");
+
+                            imprimirArchivo();
+
+                            DataBase.Instance.ArbolPartido.Insertar(item);
+                        }
+                    }
+                }
 
                 return RedirectToAction("Index");
             }

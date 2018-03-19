@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Libreria_de_Clases
@@ -164,7 +165,6 @@ namespace Libreria_de_Clases
 
         }
 
-    
         private NodoAVL<T> Reemplazar(NodoAVL<T> NodoAEliminar)
         {
             NodoAVL<T> remplazoPadre = NodoAEliminar;
@@ -318,6 +318,14 @@ namespace Libreria_de_Clases
                 return nodoP;
         }
 
+        public List<T> ObtenerArbol()
+        {
+            List<T> Partidos = new List<T>();
+            InOrder(Raiz, ref Partidos);
+
+            return Partidos;
+        }
+
         private void PreOrder(NodoAVL<T> Aux, ref List<T> Elements)
         {
             if (Aux != null)
@@ -361,9 +369,8 @@ namespace Libreria_de_Clases
                     PostOrder(Raiz, ref Elements);
                     break;
             }
+
             return Elements;
-
-
         }
 
     }

@@ -2,7 +2,10 @@
     ViewBag.Title = "Cargar Archivo";
 }
 
-<h2>Subir Archivo</h2>
+<h1>Subir Archivo</h1>
+
+<br />
+
 @using (Html.BeginForm("UploadFile", "Partido", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken();
@@ -12,9 +15,25 @@
     <div class="row">
         <div class="col-md-12">
             <h2 align="center">Agregar con Archivo</h2>
-            <p align="center">
+
+            <br />
+
+            <div class="col-md-12" align="center" id="contenedor">
+                <h4>Seleccione la Primary Key del árbol</h4>
+                <form method="get" action="@Url.Action("Index", "Partido")">
+                    <label for="Cambiar">Agregar por </label>
+                    <select name="Tipo" id="Tipo">
+                        <option value="1">Número de Partido</option>
+                        <option value="2">Fecha del Partido</option>
+                    </select>
+                </form>
+            </div>
+
+            <br />
+
+            <h4 align="center">
                 Para agregar un grupo de personas a través de un archivo .json
-            </p>
+            </h4>
 
             <div align="center" class="form-group">
                 <input type="file" name="file" value="Examinar" class="btn-default" style="color:transparent" />

@@ -8,6 +8,9 @@ namespace Lab03.Models
 {
     public class Partido : IComparable
     {
+        // Codigo Primary Key
+        public int codigoPK = 1;
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "El Numero de Partido es Requerido")]
         public int noPartido { get; set; }
 
@@ -34,6 +37,7 @@ namespace Lab03.Models
             this.Pais1 = Pais1;
             this.Pais2 = Pais2;
             this.Estadio = Estadio;
+            this.codigoPK = 1;
         }
 
 
@@ -60,7 +64,11 @@ namespace Lab03.Models
             try
             {
                 Partido partido = obj as Partido;
-                return CompareByNoPartido(partido);
+                
+                if (partido.codigoPK == 1)
+                    return CompareByNoPartido(partido);
+                else 
+                    return CompareByFecha(partido);
             }
             catch (Exception ex)
             {
