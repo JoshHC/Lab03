@@ -1,0 +1,34 @@
+﻿@model Lab03.Models.Partido
+
+<h2>Busqueda</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div id="contenedor"></div>
+        <h4>Seleccione una Opcion para Buscar</h4>
+        <form method="get" action="@Url.Action("Busqueda", "Partido")">
+            <label for="search">Buscar Por:</label>
+            <select name="Tipo" id="Tipo">
+                <option value="No Partido">No. de Partido</option>
+                <option value="Fecha de Partido">Fecha de Partido</option>
+            </select>
+            <input type="text" name="Search" id="Search" />
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+}
+
+
+
+<div>
+    @Html.ActionLink("Ver Jugadores", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

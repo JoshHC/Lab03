@@ -19,13 +19,14 @@ namespace Lab03.Controllers
 
         public static void imprimirArchivo()
         {
-            StreamWriter escritor = new StreamWriter(@"C:\Users\Admin\Desktop\Bitácora.txt");
+           /* StreamWriter escritor = new StreamWriter(@"C:\Users\josue\Desktop");
+            //Cambiar luego C:\Users\Admin\Desktop\Bitácora.txt 
 
             foreach (var linea in DataBase.Instance.ArchivoTexto)
             {
                 escritor.WriteLine(linea);
             }
-            escritor.Close();
+            escritor.Close();*/
         }
 
         // GET: Partido
@@ -243,6 +244,50 @@ namespace Lab03.Controllers
                 return RedirectToAction("Index");
             }  
 
+        }
+
+        public ActionResult Busqueda(string Tipo, string Search)
+        {
+            if (Tipo == "No Partido")
+            {
+
+                List<Partido> ListaDeBuscados = new List<Partido>();
+                List<Partido> NoPartidoBuscado = new List<Partido>();
+                NoPartidoBuscado.Clear();
+                ListaDeBuscados.Clear();
+                ListaDeBuscados = DataBase.Instance.ArbolPartido.ObtenerArbol();
+                foreach (var item in ListaDeBuscados)
+                {
+                    if (item.noPartido == Convert.ToInt32(Search))
+                    {
+                        NoPartidoBuscado.Add(item);
+                    }
+
+                }
+                return View("Index", NoPartidoBuscado);
+
+
+            }
+            else if (Tipo == "Fecha de Partido")
+            {
+                List<Partido> ListaDeBuscados = new List<Partido>();
+                List<Partido> FechasBuscadas = new List<Partido>();
+                FechasBuscadas.Clear();
+                ListaDeBuscados.Clear();
+                ListaDeBuscados = DataBase.Instance.ArbolPartido.ObtenerArbol();
+                foreach (var item in ListaDeBuscados)
+                {
+                    if (item.FechaPartido == Convert.ToDateTime(Search))
+                    {
+                        FechasBuscadas.Add(item);
+                    }
+
+                }
+                return View("Index", FechasBuscadas);
+
+            }
+
+            return View();
         }
     }
 }

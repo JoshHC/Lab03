@@ -10,7 +10,8 @@
 <h1>Listado de Partidos</h1>
 
 <p>
-    @Html.ActionLink("Crear Nuevo", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create")|
+    @Html.ActionLink("Buscar", "Busqueda")
 </p>
 
 <br />
@@ -62,8 +63,6 @@
                 @Html.DisplayFor(modelItem => item.Estadio)
             </td>
             <td align="center">
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { NoPartido = item.noPartido, FechaPartido = item.FechaPartido, Grupo = item.Grupo, Pais1 = item.Pais1, Pais2 = item.Pais2, Estadio = item.Estadio })
             </td>
         </tr>
