@@ -17,15 +17,23 @@ namespace Lab03.Controllers
         //Se crea un Jugador Momentaneo para pasar los datos (Carga del archivo)
         List<Partido> ListadePartidos = new List<Partido>();
 
-        public static void imprimirArchivo()
+        public static int contador = 0;
+        public void imprimirArchivo()
         {
-            StreamWriter escritor = new StreamWriter(@"C:\Users\Admin\Desktop\Bitácora.txt");
-
-            foreach (var linea in DataBase.Instance.ArchivoTexto)
+           
+          StreamWriter escritor = new StreamWriter(@"C:\Users\Bitacora.txt");
+        
+          foreach (var linea in DataBase.Instance.ArchivoTexto)
+          {
+                    escritor.WriteLine(linea);
+          }
+          escritor.Close();
+            if(contador == 0)
             {
-                escritor.WriteLine(linea);
+                TempData["msg"] = "<script> alert('El Archivo de Texto se ha Guardado en C:Users');</script>";
             }
-            escritor.Close();
+            contador++;
+
         }
 
         // GET: Partido
@@ -234,7 +242,6 @@ namespace Lab03.Controllers
                         }
                     }
                 }
-
                 return RedirectToAction("Index");
             }
             catch

@@ -2,7 +2,10 @@
     ViewBag.Title = "Cargar Archivo";
 }
 
-<h1>Subir Archivo</h1>
+<body background="~/Content/River.jpg">
+</body>
+
+<h1><font color="#FFFFFF">Subir Archivo</font></h1>
 
 <br />
 
@@ -14,14 +17,14 @@
     <br />
     <div class="row">
         <div class="col-md-12">
-            <h2 align="center">Agregar con Archivo</h2>
+            <h2 align="center"><font color="#FFFFFF">Agregar con Archivo</font></h2>
 
             <br />
 
             <div class="col-md-12" align="center" id="contenedor">
-                <h4>Seleccione la Primary Key del árbol</h4>
+                <h4><font color="#FFFFFF">Seleccione la Primary Key del Árbol</font></h4>
                 <form method="get" action="@Url.Action("Index", "Partido")">
-                    <label for="Cambiar">Agregar por </label>
+                    <label for="Cambiar"><font color="#FFFFFF">Agregar Por:</font></label>
                     <select name="Tipo" id="Tipo">
                         <option value="1">Número de Partido</option>
                         <option value="2">Fecha del Partido</option>
@@ -32,7 +35,7 @@
             <br />
 
             <h4 align="center">
-                Para agregar un grupo de personas a través de un archivo .json
+                <font color="#FFFFFF">Para agregar un grupo de personas a través de un archivo .json</font>
             </h4>
 
             <div align="center" class="form-group">
