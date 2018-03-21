@@ -246,7 +246,7 @@ namespace Lab03.Controllers
             }
             catch
             {
-                TempData["msg"] = "<script> alert('Error Los Datos del Archivo Json no se pudieron Insertar');</script>";
+                TempData["msg"] = "<script> alert('Error Los Datos del Archivo Json no se pudieron Insertar, Comprueba que ejecutaste Visual Studio en Modo Administrador');</script>";
                 return RedirectToAction("Index");
             }  
 
